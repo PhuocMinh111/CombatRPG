@@ -11,17 +11,17 @@ public class PlayerIdleState : PlayerState
     {
         base.Enter();
     }
-   
+
     public override void Exit()
     {
         base.Exit();
     }
     public override void Update()
     {
-        Debug.Log("state Idle" );
+        Debug.Log("state Idle");
         base.Update();
-       if (xInput != 0)
-        playerStateMachine.ChangeState(player.MoveState);
-        
+        if (xInput != 0)
+            playerStateMachine.ChangeState(playerStateMachine.MoveState);
+
     }
 }

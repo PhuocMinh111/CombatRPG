@@ -5,66 +5,87 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+
     #region  private 
-          [SerializeField] private float _moveSpeed = 3f;
-          [SerializeField] private Vector2 _position;
-    private Rigidbody2D _rb ;
+    [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private Vector2 _position;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _sr;
+
+    private bool _isGround;
 
     #endregion
 
     #region property
-      public float MoveSpeed 
-      {
-        get {return _moveSpeed;}
-      }
-      public Rigidbody2D Rigidbody2D 
-        {
-        get {return _rb;} 
-      
-        }
+    public float MoveSpeed
+    {
+        get { return _moveSpeed; }
+    }
+    public float JumpForce
+    {
+        get { return _jumpForce; }
+    }
+    public bool IsGround
+    {
+        get { return _isGround; }
+    }
+    public Rigidbody2D Rigidbody2D
+    {
+        get { return _rb; }
+
+    }
+    public SpriteRenderer SpriteRenderer
+    {
+        get { return _sr; }
+        private set {; }
+    }
+
     public Vector2 Position
     {
-        get {return _position;}
-        set {_position = value;}
+        get { return _position; }
+        set { _position = value; }
     }
-    public PlayerState MoveState {get;set;}
-    public PlayerState IdleState {get;set;}
+
     #endregion
 
-    public PlayerStateMachine playerStateMachine {get;private set;}
-    public Animator PlayerAnimator {get;private set;}
-  
-    private void Awake ()
+    public PlayerStateMachine playerStateMachine { get; private set; }
+    public Animator PlayerAnimator { get; private set; }
+
+    private void Awake()
     {
-       Init();
+        Init();
     }
 
     private void Start()
     {
-     
+
     }
 
 
     private void Update()
     {
-      
-        playerStateMachine.currentState.Update();
-        
-      
+
+        playerStateMachine.CurrentState.Update();
+
+
     }
-    public void SetVelocity (float x,float y) 
+    public void SetVelocity(float x, float y)
     {
-        _rb.velocity = new Vector2(x,y);
+        _rb.velocity = new Vector2(x, y);
     }
     // init
     private void Init()
     {
-         _rb = GetComponent<Rigidbody2D>();
-          PlayerAnimator = GetComponentInChildren<Animator>();
-         playerStateMachine = new PlayerStateMachine();
-         MoveState = new PlayerMoveState(this,playerStateMachine,"Move");
-         IdleState = new PlayerIdleState(this,playerStateMachine,"Idle");
-            playerStateMachine.Initialize(IdleState);
+        _sr = GetComponentInChildren<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
+        PlayerAnimator = GetComponentInChildren<Animator>();
+        playerStateMachine = new PlayerStateMachine(this);
+
+    }
+    private void CheckCollide()
+    {
+        RaycastHit hit;
+        _isGround = Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("Ground"));
     }
 }
