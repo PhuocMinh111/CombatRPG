@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     {
         get { return _moveSpeed; }
     }
+    public float DistanceToGround
+    {
+        get; private set;
+    }
     public float JumpForce
     {
         get { return _jumpForce; }
@@ -67,7 +71,7 @@ public class Player : MonoBehaviour
     {
 
         playerStateMachine.CurrentState.Update();
-
+        CheckCollide();
 
     }
     public void SetVelocity(float x, float y)
@@ -87,5 +91,6 @@ public class Player : MonoBehaviour
     {
         RaycastHit hit;
         _isGround = Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("Ground"));
+        DistanceToGround = hit.distance;
     }
 }

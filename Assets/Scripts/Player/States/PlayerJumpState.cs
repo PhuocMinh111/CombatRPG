@@ -19,8 +19,10 @@ public class PlayerJumpState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (IsGround)
-            playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        Debug.Log(player.DistanceToGround);
+        // Debug.Break();
+        // if (IsGround)
+        //     playerStateMachine.ChangeState(playerStateMachine.IdleState);
 
     }
 }

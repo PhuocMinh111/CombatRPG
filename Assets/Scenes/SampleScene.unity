@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 3
+  _jumpForce: 10
   _position: {x: 0, y: 0}
 --- !u!4 &581059339
 Transform:
@@ -337,7 +338,7 @@ GameObject:
   - component: {fileID: 1066385267}
   - component: {fileID: 1066385266}
   - component: {fileID: 1066385265}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
