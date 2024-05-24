@@ -28,8 +28,8 @@ public class Player : MonoBehaviour
         get {return _position;}
         set {_position = value;}
     }
-     public PlayerState moveState {get;set;}
-   public PlayerState idleState {get;set;}
+    public PlayerState MoveState {get;set;}
+    public PlayerState IdleState {get;set;}
     #endregion
 
     public PlayerStateMachine playerStateMachine {get;private set;}
@@ -37,12 +37,7 @@ public class Player : MonoBehaviour
   
     private void Awake ()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        PlayerAnimator = GetComponentInChildren<Animator>();
-        playerStateMachine = new PlayerStateMachine();
-         moveState = new PlayerState(this,playerStateMachine,"Move");
-         idleState = new PlayerState(this,playerStateMachine,"Idle");
-           playerStateMachine.Initialize(idleState);
+       Init();
     }
 
     private void Start()
@@ -61,5 +56,15 @@ public class Player : MonoBehaviour
     public void SetVelocity (float x,float y) 
     {
         _rb.velocity = new Vector2(x,y);
+    }
+    // init
+    private void Init()
+    {
+         _rb = GetComponent<Rigidbody2D>();
+          PlayerAnimator = GetComponentInChildren<Animator>();
+         playerStateMachine = new PlayerStateMachine();
+         MoveState = new PlayerMoveState(this,playerStateMachine,"Move");
+         IdleState = new PlayerIdleState(this,playerStateMachine,"Idle");
+            playerStateMachine.Initialize(IdleState);
     }
 }

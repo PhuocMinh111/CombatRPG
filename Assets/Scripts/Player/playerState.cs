@@ -10,11 +10,13 @@ interface IPlayerState {
 }
 public  class PlayerState:IPlayerState
 {
-  
+  #region protected
     protected PlayerStateMachine playerStateMachine;
     
     protected float xInput;
     protected Rigidbody2D rb;
+
+ #endregion
     public string state {get;set;}
 
     protected Player player;
@@ -25,6 +27,7 @@ public  class PlayerState:IPlayerState
         this.playerStateMachine = playerStateMachine;
         this.animBoolName = _animBoolName;
     }
+    
     public virtual void Enter ()
     {   
         rb = player.Rigidbody2D;
@@ -33,25 +36,15 @@ public  class PlayerState:IPlayerState
     }
     public virtual void Update () {
         xInput = Input.GetAxisRaw("Horizontal");
-        CheckInput();
-        SetVelocity();
+        
+SetVelocity();
     }
     public virtual void Exit()
     {
        
         this.player.PlayerAnimator.SetBool(animBoolName,false);
     }
-    void CheckInput ()
-    {
-        if (xInput == 0)
-        {
-            this.playerStateMachine.ChangeState(player.idleState);
-        } 
-        if (xInput != 0)
-        {
-            this.playerStateMachine.ChangeState(player.moveState);
-        }
-    }
+    
 
     
     
