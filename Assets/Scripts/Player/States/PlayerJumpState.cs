@@ -7,6 +7,8 @@ public class PlayerJumpState : PlayerState
     public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
     }
+
+
     public override void Enter()
     {
         base.Enter();
@@ -22,7 +24,7 @@ public class PlayerJumpState : PlayerState
         base.Update();
         playerAnimator.SetFloat("yVelocity", yInput);
 
-        if (rb.velocity.y == 0)
+        if (rb.velocity.y == 0 && player.GroundCheck())
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
 
     }

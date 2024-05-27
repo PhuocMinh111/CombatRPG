@@ -21,8 +21,8 @@ public class PlayerMoveState : PlayerState
 
         if (xInput != 0)
         {
-            player.SpriteRenderer.flipX = xInput < 0;
-            if (yInput > 0)
+
+            if (Input.GetKeyDown(KeyCode.Space) && player.GroundCheck())
             {
                 playerStateMachine.ChangeState(playerStateMachine.JumpState);
             }

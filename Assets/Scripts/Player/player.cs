@@ -8,12 +8,17 @@ public class Player : MonoBehaviour
 {
 
     #region  private 
+    [Header("movement")]
     [SerializeField] private float _moveSpeed = 3f;
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private Vector2 _position;
+    [Header("Collision info")]
+    [SerializeField] private float distanceToGround;
+    [SerializeField] private float distanceToWall;
+    [SerializeField] private LayerMask whatIsGround;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
-
+    private bool _facingRight = true;
     private bool _isGround;
     private bool _airBorne;
 
@@ -81,18 +86,35 @@ public class Player : MonoBehaviour
 
         CheckInput();
         CheckCollide();
+        FlipController(_rb.velocity.x);
         playerStateMachine.CurrentState.Update();
 
     }
     public void SetVelocity(float x, float y)
     {
         _rb.velocity = new Vector2(x, y);
+
     }
 
-    #region JumpForce
+    #region Player Action
     public void Jump()
     {
         _rb.velocity = new Vector2(_rb.velocity.x, JumpForce);
+    }
+
+    public void FlipController(float _x)
+    {
+        if (_x > 0 && !_facingRight)
+            Flip();
+        else if (_x < 0 && _facingRight)
+            Flip();
+
+
+        void Flip()
+        {
+            _facingRight = !_facingRight;
+            transform.Rotate(0, 180, 0);
+        }
     }
 
     #endregion
@@ -119,4 +141,10 @@ public class Player : MonoBehaviour
     {
 
     }
+    public bool GroundCheck() => Physics2D.Raycast(transform.position, Vector2.down, distanceToGround, whatIsGround);
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - distanceToGround));
+    }
+
 }

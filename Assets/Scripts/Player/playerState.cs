@@ -44,7 +44,7 @@ public class PlayerState : IPlayerState
     public virtual void Update()
     {
 
-        IsGround = player.IsGround;
+
         xInput = player.xInput;
         yInput = player.yInput;
 
