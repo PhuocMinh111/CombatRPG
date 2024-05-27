@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 581059338}
   - component: {fileID: 581059341}
   - component: {fileID: 581059340}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,8 +249,11 @@ MonoBehaviour:
   _moveSpeed: 3
   _jumpForce: 10
   _position: {x: 0, y: 0}
-  distanceToGround: 1.4
+  distanceToGround: 1.56
   distanceToWall: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &581059339
 Transform:
   m_ObjectHideFlags: 0
@@ -470,7 +473,7 @@ GameObject:
   - component: {fileID: 1712013021}
   - component: {fileID: 1712013022}
   - component: {fileID: 1712013023}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

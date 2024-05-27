@@ -7,12 +7,12 @@ public class PlayerJumpState : PlayerState
     public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
     }
-
+    private bool _canDoubleJump = true;
 
     public override void Enter()
     {
         base.Enter();
-        rb.velocity = new Vector2(rb.velocity.x, player.JumpForce);
+        player.Jump(1);
     }
 
     public override void Exit()
@@ -24,8 +24,22 @@ public class PlayerJumpState : PlayerState
         base.Update();
         playerAnimator.SetFloat("yVelocity", yInput);
 
-        if (rb.velocity.y == 0 && player.GroundCheck())
-            playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        if (player.IsGround)
+        {
+            _canDoubleJump = true;
+            if (rb.velocity.y == 0)
+                playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        }
+        else
+        {
+            player.MoveHorizontally(xInput);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!_canDoubleJump) return;
+                _canDoubleJump = false;
+                player.Jump(1.2f);
+            }
+        }
 
     }
 }

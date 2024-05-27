@@ -20,7 +20,7 @@ public class PlayerIdleState : PlayerState
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.Space) && player.GroundCheck())
+        if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
         {
 
             playerStateMachine.ChangeState(playerStateMachine.JumpState);

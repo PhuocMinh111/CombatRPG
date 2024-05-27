@@ -17,12 +17,12 @@ public class PlayerMoveState : PlayerState
     public override void Update()
     {
         base.Update();
-        rb.velocity = new Vector2(xInput * player.MoveSpeed, rb.velocity.y);
+        player.MoveHorizontally(xInput);
 
         if (xInput != 0)
         {
 
-            if (Input.GetKeyDown(KeyCode.Space) && player.GroundCheck())
+            if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
             {
                 playerStateMachine.ChangeState(playerStateMachine.JumpState);
             }
