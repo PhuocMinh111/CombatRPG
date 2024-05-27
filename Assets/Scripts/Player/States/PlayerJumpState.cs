@@ -10,6 +10,7 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        rb.velocity = new Vector2(rb.velocity.x, player.JumpForce);
     }
 
     public override void Exit()
@@ -19,10 +20,10 @@ public class PlayerJumpState : PlayerState
     public override void Update()
     {
         base.Update();
-        Debug.Log(player.DistanceToGround);
-        // Debug.Break();
-        // if (IsGround)
-        //     playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        playerAnimator.SetFloat("yVelocity", yInput);
+
+        if (rb.velocity.y == 0)
+            playerStateMachine.ChangeState(playerStateMachine.IdleState);
 
     }
 }

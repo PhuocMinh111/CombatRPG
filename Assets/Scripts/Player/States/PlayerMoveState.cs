@@ -17,7 +17,7 @@ public class PlayerMoveState : PlayerState
     public override void Update()
     {
         base.Update();
-        SetVelocity();
+        rb.velocity = new Vector2(xInput * player.MoveSpeed, rb.velocity.y);
 
         if (xInput != 0)
         {

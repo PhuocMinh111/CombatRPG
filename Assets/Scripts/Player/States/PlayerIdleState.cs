@@ -18,12 +18,18 @@ public class PlayerIdleState : PlayerState
     }
     public override void Update()
     {
-        Debug.Log("yInput " + yInput);
-        if (yInput != 0)
-            playerStateMachine.ChangeState(playerStateMachine.JumpState);
         base.Update();
-        if (xInput != 0)
+
+        if (yInput > 0)
+        {
+
+            playerStateMachine.ChangeState(playerStateMachine.JumpState);
+        }
+        else if (xInput != 0)
+        {
+
             playerStateMachine.ChangeState(playerStateMachine.MoveState);
 
+        }
     }
 }
