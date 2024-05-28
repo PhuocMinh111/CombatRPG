@@ -18,11 +18,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float distanceToGround;
     [SerializeField] private float distanceToWall;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private float slideCoolDown;
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _facingRight = true;
     private bool _isGround;
     private bool _airBorne;
+    private bool _isSliding = false;
+    private Timer slideTimer;
 
     #endregion
 
@@ -30,6 +33,10 @@ public class Player : MonoBehaviour
     public float MoveSpeed
     {
         get { return _moveSpeed; }
+    }
+    public bool IsSliding
+    {
+        get { return _isSliding; }
     }
     public float xInput { get; private set; }
 
@@ -80,7 +87,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-
+        slideTimer = gameObject.AddComponent<Timer>();
     }
 
 
@@ -98,7 +105,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         GroundCheck();
-        Debug.Log(_isGround);
+        CheckForSlide();
     }
 
 
@@ -119,6 +126,25 @@ public class Player : MonoBehaviour
     {
         _rb.velocity = new Vector2(_xVelocity * _moveSpeed, _rb.velocity.y);
     }
+    private void CheckForSlide()
+    {
+        _isSliding = !slideTimer.IsTimeOut;
+
+
+        Debug.Log("Is Sliding " + _isSliding);
+        if (!_isSliding)
+        {
+            Debug.Log("slide end");
+        }
+    }
+    public void Slide(float _timer)
+    {
+
+        slideTimer.TimerInSeconds = _timer;
+
+    }
+
+
     public void FlipController(float _x)
     {
         if (_x > 0 && !_facingRight)
