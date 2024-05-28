@@ -17,21 +17,34 @@ public class PlayerMoveState : PlayerState
     public override void Update()
     {
         base.Update();
-        player.MoveHorizontally(xInput);
 
-        if (xInput != 0)
+
+        if (xInput != 0 && player.IsGround)
         {
+            player.MoveHorizontally(xInput);
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !player.IsSliding)
+            {
+                playerStateMachine.ChangeState(playerStateMachine.SlideState);
 
-            if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && !player.IsSliding)
             {
                 playerStateMachine.ChangeState(playerStateMachine.JumpState);
             }
 
         }
         else if (xInput == 0)
+        {
+
+
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
 
+        }
+
     }
+
+
+
     public override void Exit()
     {
         base.Exit();

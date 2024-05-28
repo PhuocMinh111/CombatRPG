@@ -11,6 +11,8 @@ public class PlayerStateMachine
   public PlayerState MoveState { get; private set; }
   public PlayerState JumpState { get; private set; }
 
+  public PlayerState SlideState { get; private set; }
+
   public PlayerState CurrentState
   {
     get { return currentState; }
@@ -20,6 +22,7 @@ public class PlayerStateMachine
     IdleState = new PlayerIdleState(player, this, "Idle");
     MoveState = new PlayerMoveState(player, this, "Move");
     JumpState = new PlayerJumpState(player, this, "Jump");
+    SlideState = new PlayerSlideState(player, this, "Slide");
 
     Initialize(IdleState);
   }

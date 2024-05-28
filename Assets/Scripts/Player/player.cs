@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float distanceToGround;
     [SerializeField] private float distanceToWall;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float slideCoolDown;
+    [SerializeField] private float _slideDuration = 2f;
+
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _facingRight = true;
@@ -33,6 +34,10 @@ public class Player : MonoBehaviour
     public float MoveSpeed
     {
         get { return _moveSpeed; }
+    }
+    public float SlideDuration
+    {
+        get { return _slideDuration; }
     }
     public bool IsSliding
     {
