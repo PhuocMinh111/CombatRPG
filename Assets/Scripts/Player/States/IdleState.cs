@@ -27,17 +27,17 @@ public class PlayerIdleState : PlayerState
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
             {
 
-                playerStateMachine.ChangeState(playerStateMachine.JumpState);
+                stateMachine.ChangeState(stateMachine.JumpState);
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !player.IsSliding)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideTimer.IsTimeOut)
             {
-                player.Slide(2f);
+                stateMachine.ChangeState(stateMachine.SlideState);
             }
         }
         else if (xInput != 0)
         {
 
-            playerStateMachine.ChangeState(playerStateMachine.MoveState);
+            stateMachine.ChangeState(stateMachine.MoveState);
 
         }
 

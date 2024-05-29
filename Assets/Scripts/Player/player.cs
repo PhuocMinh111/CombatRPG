@@ -11,14 +11,15 @@ public class Player : MonoBehaviour
 
     #region  private 
     [Header("movement")]
-    [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private float _moveSpeed = 4f;
     [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private float _slideSpeed = 6f;
+    [SerializeField] private float _slideDuration = .8f;
     [SerializeField] private Vector2 _position;
     [Header("Collision info")]
     [SerializeField] private float distanceToGround;
     [SerializeField] private float distanceToWall;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private float _slideDuration = 2f;
 
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
@@ -35,6 +36,14 @@ public class Player : MonoBehaviour
     {
         get { return _moveSpeed; }
     }
+    public float SlideSpeed
+    {
+        get { return _slideSpeed; }
+    }
+    public Timer SlideTimer
+    {
+        get { return slideTimer; }
+    }
     public float SlideDuration
     {
         get { return _slideDuration; }
@@ -43,6 +52,11 @@ public class Player : MonoBehaviour
     {
         get { return _isSliding; }
     }
+    public bool FacingRight
+    {
+        get { return _facingRight; }
+    }
+
     public float xInput { get; private set; }
 
     public float yInput { get; private set; }
@@ -110,7 +124,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         GroundCheck();
-        CheckForSlide();
+
     }
 
 
@@ -131,21 +145,12 @@ public class Player : MonoBehaviour
     {
         _rb.velocity = new Vector2(_xVelocity * _moveSpeed, _rb.velocity.y);
     }
-    private void CheckForSlide()
-    {
-        _isSliding = !slideTimer.IsTimeOut;
 
-
-        Debug.Log("Is Sliding " + _isSliding);
-        if (!_isSliding)
-        {
-            Debug.Log("slide end");
-        }
-    }
     public void Slide(float _timer)
     {
 
-        slideTimer.TimerInSeconds = _timer;
+
+        slideTimer.SetTimer(_timer);
 
     }
 

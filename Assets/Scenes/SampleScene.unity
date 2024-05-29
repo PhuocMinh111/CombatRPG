@@ -246,8 +246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bf79217072bca41bc02b3ebea886ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
+  _moveSpeed: 5
   _jumpForce: 10
+  _slideSpeed: 9
+  _slideDuration: 1
   _position: {x: 0, y: 0}
   distanceToGround: 1.56
   distanceToWall: 0

@@ -19,17 +19,17 @@ public class PlayerMoveState : PlayerState
         base.Update();
 
 
-        if (xInput != 0 && player.IsGround)
+        if (xInput != 0)
         {
             player.MoveHorizontally(xInput);
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !player.IsSliding)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideTimer.IsTimeOut)
             {
-                playerStateMachine.ChangeState(playerStateMachine.SlideState);
+                stateMachine.ChangeState(stateMachine.SlideState);
 
             }
-            else if (Input.GetKeyDown(KeyCode.Space) && !player.IsSliding)
+            else if (Input.GetKeyDown(KeyCode.Space) && !player.IsSliding && player.IsGround)
             {
-                playerStateMachine.ChangeState(playerStateMachine.JumpState);
+                stateMachine.ChangeState(stateMachine.JumpState);
             }
 
         }
@@ -37,7 +37,7 @@ public class PlayerMoveState : PlayerState
         {
 
 
-            playerStateMachine.ChangeState(playerStateMachine.IdleState);
+            stateMachine.ChangeState(stateMachine.IdleState);
 
         }
 

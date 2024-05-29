@@ -28,7 +28,7 @@ public class PlayerJumpState : PlayerState
         {
             _canDoubleJump = true;
             if (rb.velocity.y == 0)
-                playerStateMachine.ChangeState(playerStateMachine.IdleState);
+                stateMachine.ChangeState(stateMachine.IdleState);
         }
         else
         {

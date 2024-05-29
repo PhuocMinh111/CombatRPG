@@ -12,7 +12,7 @@ interface IPlayerState
 public class PlayerState : IPlayerState
 {
     #region protected
-    protected PlayerStateMachine playerStateMachine;
+    protected PlayerStateMachine stateMachine;
     protected bool IsGround;
     protected float xInput;
     protected float yInput;
@@ -29,7 +29,7 @@ public class PlayerState : IPlayerState
     public PlayerState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName)
     {
         this.player = _player;
-        this.playerStateMachine = playerStateMachine;
+        this.stateMachine = playerStateMachine;
         this.animBoolName = _animBoolName;
         rb = _player.Rigidbody2D;
         playerAnimator = _player.PlayerAnimator;
@@ -37,8 +37,8 @@ public class PlayerState : IPlayerState
 
     public virtual void Enter()
     {
-
-        this.player.PlayerAnimator.SetBool(animBoolName, true);
+        Debug.Log("enter " + animBoolName);
+        playerAnimator.SetBool(animBoolName, true);
 
     }
     public virtual void Update()
