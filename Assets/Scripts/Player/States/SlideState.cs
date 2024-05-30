@@ -17,9 +17,12 @@ public class PlayerSlideState : PlayerState
 
     }
     public override void Update()
+
     {
         base.Update();
+
         _currentSlideTime -= Time.deltaTime;
+
         // out slide
         if (player.SlideTimer.IsTimeOut)
         {
@@ -57,18 +60,9 @@ public class PlayerSlideState : PlayerState
 
     private void Slide(float time)
     {
+        UpdateSlideTime(time);
+
         ++_slideTaken;
-        if (_currentSlideTime < player.SlideDuration && _currentSlideTime > 0)
-        {
-            _currentSlideTime += time;
-            player.SlideTimer.TimerInSeconds += time;
-        }
-        else
-        {
-
-            player.SlideTimer.SetTimer(time);
-        }
-
 
         if (_slideTaken > _maxSlides)
         {
@@ -81,8 +75,23 @@ public class PlayerSlideState : PlayerState
 
             rb.velocity = new Vector2(player.SlideSpeed * dir, rb.velocity.y);
 
-            Debug.Log("In slide " + player.SlideTimer.IsTimeOut);
+
         }
+    }
+
+    private void UpdateSlideTime(float time)
+    {
+        if (_currentSlideTime + time < player.SlideDuration && _currentSlideTime > 0)
+        {
+            _currentSlideTime += time;
+            player.SlideTimer.TimerInSeconds += time;
+        }
+        else
+        {
+
+            player.SlideTimer.TimerInSeconds = time;
+        }
+
     }
 
 }
