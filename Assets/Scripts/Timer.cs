@@ -26,7 +26,8 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _timer -= 0.02f;
+        if (!_isTimeOut)
+            _timer -= 0.02f;
         if (_timer < 0)
         {
 

@@ -8,6 +8,7 @@ public class PlayerSlideState : PlayerState
     private float _currentSlideTime = 0;
     private float _slideIncreaser = 0.5f;
     private int _maxSlides = 3;
+    private float _canMoveThreshold = 0.5f;
     private int _slideTaken = 0;
     public override void Enter()
     {
@@ -22,33 +23,32 @@ public class PlayerSlideState : PlayerState
         base.Update();
 
         _currentSlideTime -= Time.deltaTime;
-
-        // out slide
         if (player.SlideTimer.IsTimeOut)
         {
-            // Debug.Break();
 
-            if (!player.IsGround)
-            {
-                stateMachine.ChangeState(stateMachine.JumpState);
-            }
             if (xInput != 0)
             {
                 stateMachine.ChangeState(stateMachine.MoveState);
+
+                // out slide
             }
+            // In sliding
             else
             {
-
                 stateMachine.ChangeState(stateMachine.IdleState);
+                if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideDuration - _currentSlideTime < _canMoveThreshold)
+                {
+                    Slide(_slideIncreaser);
+                }
             }
         }
-        // In sliding
         else
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (xInput != 0 && _currentSlideTime < _canMoveThreshold)
             {
-                Slide(_slideIncreaser);
+                stateMachine.ChangeState(stateMachine.MoveState);
             }
+
         }
 
     }
@@ -81,16 +81,10 @@ public class PlayerSlideState : PlayerState
 
     private void UpdateSlideTime(float time)
     {
-        if (_currentSlideTime + time < player.SlideDuration && _currentSlideTime > 0)
-        {
-            _currentSlideTime += time;
-            player.SlideTimer.TimerInSeconds += time;
-        }
-        else
-        {
 
-            player.SlideTimer.TimerInSeconds = time;
-        }
+        if (player.SlideTimer.IsTimeOut)
+            player.SlideTimer.SetTimer(time);
+
 
     }
 

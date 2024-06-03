@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,11 +21,27 @@ public class PlayerState : IPlayerState
     protected Animator playerAnimator;
 
     #endregion
-    public string State { get; set; }
 
     protected Player player;
     private string animBoolName;
 
+    protected Dictionary<string, PlayerState> _subStates;
+    protected PlayerState _currentSubState = null;
+
+    #region property
+    public string State { get; set; }
+    public Dictionary<string, PlayerState> SubStates
+    {
+        get { return _subStates; }
+
+    }
+    public PlayerState CurrentSubState
+    {
+        get { return _currentSubState; }
+        set { _currentSubState = value; }
+    }
+
+    #endregion
 
     public PlayerState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName)
     {

@@ -12,6 +12,7 @@ public class PlayerStateMachine
   public PlayerState JumpState { get; private set; }
 
   public PlayerState SlideState { get; private set; }
+  public PlayerState AttackState { get; private set; }
 
   public PlayerState CurrentState
   {
@@ -38,5 +39,13 @@ public class PlayerStateMachine
     currentState.Exit();
     currentState = _newState;
     currentState.Enter();
+  }
+
+  public void ChangeSubState(PlayerState _state)
+  {
+    if (_state.CurrentSubState != null) return;
+    currentState.CurrentSubState.Exit();
+    currentState.CurrentSubState = _state;
+    currentState.CurrentSubState.Enter();
   }
 }
