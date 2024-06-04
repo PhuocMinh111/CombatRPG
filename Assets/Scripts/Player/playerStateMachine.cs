@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum AnimBoolNames
+public enum Anim
 {
   Jump,
   Idle,
@@ -13,6 +13,10 @@ public enum AnimBoolNames
 };
 public class PlayerStateMachine
 {
+  public static string GetAnim(Anim animBoolNames)
+  {
+    return animBoolNames.ToString();
+  }
   private PlayerState currentState;
   private Player player;
 
@@ -29,10 +33,10 @@ public class PlayerStateMachine
   }
   public PlayerStateMachine(Player player)
   {
-    IdleState = new PlayerIdleState(player, this, "Idle");
-    MoveState = new PlayerMoveState(player, this, "Move");
-    JumpState = new PlayerJumpState(player, this, "Jump");
-    SlideState = new PlayerSlideState(player, this, "Slide");
+    IdleState = new PlayerIdleState(player, this, GetAnim(Anim.Idle));
+    MoveState = new PlayerMoveState(player, this, GetAnim(Anim.Move));
+    JumpState = new PlayerJumpState(player, this, GetAnim(Anim.Jump));
+    SlideState = new PlayerSlideState(player, this, GetAnim(Anim.Slide));
 
     Initialize(IdleState);
   }

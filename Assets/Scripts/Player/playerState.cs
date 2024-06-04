@@ -44,7 +44,10 @@ public class PlayerState : IPlayerState
         rb.velocity = new Vector2(xInput * this.player.MoveSpeed, yInput * this.player.JumpForce);
     }
 
-
+    protected string GetAnim(Anim anim)
+    {
+        return PlayerStateMachine.GetAnim(anim);
+    }
 
     #endregion
 

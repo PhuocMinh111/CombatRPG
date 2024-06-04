@@ -7,7 +7,7 @@ public class PlayerJumpState : PlayerState
 {
     public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
-        this.CurrentSubState = new PlayerDashState(_player, playerStateMachine, nameof(AnimBoolNames.Dash));
+        this.CurrentSubState = new PlayerDashState(_player, playerStateMachine, GetAnim(Anim.Dash));
     }
     private bool _canDoubleJump = true;
 
