@@ -1,7 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum AnimBoolNames
+{
+  Jump,
+  Idle,
+  Move,
+  Slide,
+  Dash
 
+
+};
 public class PlayerStateMachine
 {
   private PlayerState currentState;
@@ -37,15 +46,21 @@ public class PlayerStateMachine
   public void ChangeState(PlayerState _newState)
   {
     currentState.Exit();
+    if (currentState.CurrentSubState != null)
+    {
+      currentState.CurrentSubState.Exit();
+    }
     currentState = _newState;
     currentState.Enter();
   }
 
-  public void ChangeSubState(PlayerState _state)
+  public void ChangeSubState(PlayerState _subState)
   {
-    if (_state.CurrentSubState != null) return;
-    currentState.CurrentSubState.Exit();
-    currentState.CurrentSubState = _state;
-    currentState.CurrentSubState.Enter();
+    if (currentState.CurrentSubState != null)
+    {
+      currentState.CurrentSubState.Exit();
+      currentState.CurrentSubState = _subState;
+      currentState.CurrentSubState.Enter();
+    }
   }
 }

@@ -23,7 +23,6 @@ public class PlayerIdleState : PlayerState
         if (xInput == 0)
         {
 
-
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
             {
 

@@ -20,13 +20,33 @@ public class PlayerState : IPlayerState
     protected Rigidbody2D rb;
     protected Animator playerAnimator;
 
-    #endregion
+
 
     protected Player player;
     private string animBoolName;
 
-    protected Dictionary<string, PlayerState> _subStates;
+    protected Dictionary<string, PlayerState> _subStates = new Dictionary<string, PlayerState>();
     protected PlayerState _currentSubState = null;
+    protected PlayerState GetSubState(string key)
+    {
+        PlayerState subState;
+        if (this.SubStates.TryGetValue(key, out subState))
+        {
+            return subState;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    protected void SetVelocity()
+    {
+        rb.velocity = new Vector2(xInput * this.player.MoveSpeed, yInput * this.player.JumpForce);
+    }
+
+
+
+    #endregion
 
     #region property
     public string State { get; set; }
@@ -38,7 +58,15 @@ public class PlayerState : IPlayerState
     public PlayerState CurrentSubState
     {
         get { return _currentSubState; }
-        set { _currentSubState = value; }
+        set
+        {
+            if (value != null)
+            {
+                if (SubStates.TryGetValue(value.animBoolName, out _currentSubState)) return;
+                _currentSubState = value;
+                SubStates.Add(value.animBoolName, value);
+            }
+        }
     }
 
     #endregion
@@ -76,9 +104,6 @@ public class PlayerState : IPlayerState
 
 
 
-    protected void SetVelocity()
-    {
-        this.player.SetVelocity(xInput * this.player.MoveSpeed, yInput * this.player.JumpForce);
-    }
+
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,15 @@ public class PlayerJumpState : PlayerState
 {
     public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
+        this.CurrentSubState = new PlayerDashState(_player, playerStateMachine, nameof(AnimBoolNames.Dash));
     }
     private bool _canDoubleJump = true;
 
     public override void Enter()
     {
         base.Enter();
-        player.Jump(1);
+
+        Jump(1);
     }
 
     public override void Exit()
@@ -33,13 +36,29 @@ public class PlayerJumpState : PlayerState
         else
         {
             player.MoveHorizontally(xInput);
-            if (Input.GetKeyDown(KeyCode.Space))
+
+            if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
             {
-                if (!_canDoubleJump) return;
+
                 _canDoubleJump = false;
-                player.Jump(1.2f);
+                Jump(1.2f);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Dash();
             }
         }
+
+    }
+    void Jump(float _yVelocity)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, _yVelocity * player.JumpForce);
+    }
+    void Dash()
+    {
+        PlayerState DashState = GetSubState("Dash");
+        if (DashState != null)
+            stateMachine.ChangeSubState(DashState);
 
     }
 }

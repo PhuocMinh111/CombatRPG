@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     [Header("movement")]
     [SerializeField] private float _moveSpeed = 4f;
     [SerializeField] private float _jumpForce = 5f;
-    [SerializeField] private float _slideSpeed = 6f;
+    [SerializeField] private float _dashSpeed = 8f;
+    [SerializeField] private float _slideSpeed = 12f;
     [SerializeField] private float _slideDuration = .8f;
     [SerializeField] private Vector2 _position;
     [Header("Collision info")]
@@ -39,6 +40,10 @@ public class Player : MonoBehaviour
     public float SlideSpeed
     {
         get { return _slideSpeed; }
+    }
+    public float DashSpeed
+    {
+        get { return _dashSpeed; }
     }
     public Timer SlideTimer
     {
@@ -135,23 +140,22 @@ public class Player : MonoBehaviour
 
     }
 
+
+
+
+
     #region Player Action
-    public void Jump(float _yVelocity)
+
+
+    public void MoveHorizontally(float _xMultiply)
     {
-        _rb.velocity = new Vector2(_rb.velocity.x, _yVelocity * JumpForce);
+        var xClamp = Math.Clamp(_xMultiply, -2, 2);
+        _rb.velocity = new Vector2(xClamp * _moveSpeed, _rb.velocity.y);
     }
 
-    public void MoveHorizontally(float _xVelocity)
+    public void Dash()
     {
-        _rb.velocity = new Vector2(_xVelocity * _moveSpeed, _rb.velocity.y);
-    }
-
-    public void Slide(float _timer)
-    {
-
-
-        slideTimer.SetTimer(_timer);
-
+        _rb.velocity = new Vector2(_dashSpeed, 0);
     }
 
 
