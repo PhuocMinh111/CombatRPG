@@ -8,7 +8,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.Dash();
+        Dash();
     }
     public override void Update()
     {
@@ -22,6 +22,7 @@ public class PlayerDashState : PlayerState
             }
             else
             {
+
                 stateMachine.ChangeState(stateMachine.MoveState);
             }
         }
@@ -30,5 +31,10 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
 
+    }
+
+    void Dash()
+    {
+        rb.velocity = new Vector2(player.DashSpeed * rb.velocity.x, rb.velocity.y);
     }
 }

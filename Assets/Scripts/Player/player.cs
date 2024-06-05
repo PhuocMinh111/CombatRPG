@@ -143,9 +143,7 @@ public class Player : MonoBehaviour
 
 
 
-
     #region Player Action
-
 
     public void MoveHorizontally(float _xMultiply)
     {
@@ -153,10 +151,6 @@ public class Player : MonoBehaviour
         _rb.velocity = new Vector2(xClamp * _moveSpeed, _rb.velocity.y);
     }
 
-    public void Dash()
-    {
-        _rb.velocity = new Vector2(_dashSpeed, 0);
-    }
 
 
     public void FlipController(float _x)
@@ -176,6 +170,34 @@ public class Player : MonoBehaviour
 
     #endregion
     // init
+
+    #region  Input Action
+
+    protected void SetVelocity()
+    {
+        _rb.velocity = new Vector2(xInput * MoveSpeed, yInput * JumpForce);
+    }
+
+    void CheckInput()
+    {
+        xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
+    }
+
+
+
+    #endregion
+
+
+
+
+
+
+    private void CheckCollide()
+    {
+
+    }
+
     private void Init()
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
@@ -183,15 +205,6 @@ public class Player : MonoBehaviour
         PlayerAnimator = GetComponentInChildren<Animator>();
         playerStateMachine = new PlayerStateMachine(this);
 
-    }
-    private void CheckCollide()
-    {
-
-    }
-    void CheckInput()
-    {
-        xInput = Input.GetAxisRaw("Horizontal");
-        yInput = Input.GetAxisRaw("Vertical");
     }
 
     void OnCollisionEnter2D(Collision2D other)
