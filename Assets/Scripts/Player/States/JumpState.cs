@@ -56,9 +56,9 @@ public class PlayerJumpState : PlayerState
     }
     void Dash()
     {
-        PlayerState DashState = GetSubState("Dash");
+        PlayerState DashState = GetSubState(Anim.Dash);
         if (DashState != null)
-            stateMachine.ChangeSubState(DashState);
+            stateMachine.ChangeSubState(Anim.Dash);
 
     }
 }

@@ -7,7 +7,8 @@ public enum Anim
   Idle,
   Move,
   Slide,
-  Dash
+  Dash,
+  MovingAttack
 
 
 };
@@ -58,12 +59,13 @@ public class PlayerStateMachine
     currentState.Enter();
   }
 
-  public void ChangeSubState(PlayerState _subState)
+  public void ChangeSubState(Anim anim)
   {
-    if (currentState.CurrentSubState != null)
+    var subState = currentState.GetSubState(anim);
+    if (subState != null)
     {
       currentState.CurrentSubState.Exit();
-      currentState.CurrentSubState = _subState;
+      currentState.CurrentSubState = subState;
       currentState.CurrentSubState.Enter();
     }
   }

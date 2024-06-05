@@ -6,6 +6,7 @@ public class PlayerMoveState : PlayerState
 {
     public PlayerMoveState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
+        this.CurrentSubState = new PlayerMovingAttack(_player, playerStateMachine, GetAnim(Anim.MovingAttack));
     }
 
     public override void Enter()
@@ -19,19 +20,27 @@ public class PlayerMoveState : PlayerState
         base.Update();
 
 
-        if (xInput != 0)
+        if (xInput != 0 && player.SlideTimer.IsTimeOut)
         {
-            player.MoveHorizontally(xInput);
-            if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideTimer.IsTimeOut)
+            if (player.IsGround)
             {
-                stateMachine.ChangeState(stateMachine.SlideState);
+
+                player.MoveHorizontally(xInput);
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    stateMachine.ChangeState(stateMachine.SlideState);
+
+                }
+                else if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    stateMachine.ChangeState(stateMachine.JumpState);
+                }
+                else if (Input.GetMouseButton(1))
+                {
+                    stateMachine.ChangeSubState(Anim.MovingAttack);
+                }
 
             }
-            else if (Input.GetKeyDown(KeyCode.Space) && !player.IsSliding && player.IsGround)
-            {
-                stateMachine.ChangeState(stateMachine.JumpState);
-            }
-
         }
         else if (xInput == 0)
         {

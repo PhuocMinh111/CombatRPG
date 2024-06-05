@@ -12,25 +12,13 @@ interface IPlayerState
 }
 public class PlayerState : IPlayerState
 {
-    #region protected
-    protected PlayerStateMachine stateMachine;
-    protected bool IsGround;
-    protected float xInput;
-    protected float yInput;
-    protected Rigidbody2D rb;
-    protected Animator playerAnimator;
 
+    #region public
 
-
-    protected Player player;
-    private string animBoolName;
-
-    protected Dictionary<string, PlayerState> _subStates = new Dictionary<string, PlayerState>();
-    protected PlayerState _currentSubState = null;
-    protected PlayerState GetSubState(string key)
+    public PlayerState GetSubState(Anim key)
     {
         PlayerState subState;
-        if (this.SubStates.TryGetValue(key, out subState))
+        if (this.SubStates.TryGetValue(GetAnim(key), out subState))
         {
             return subState;
         }
@@ -39,10 +27,28 @@ public class PlayerState : IPlayerState
             return null;
         }
     }
-    protected void SetVelocity()
-    {
-        rb.velocity = new Vector2(xInput * this.player.MoveSpeed, yInput * this.player.JumpForce);
-    }
+
+
+
+    #endregion
+
+
+
+    #region protected
+    protected PlayerStateMachine stateMachine;
+    protected bool IsGround;
+    protected float xInput;
+    protected float yInput;
+    protected Rigidbody2D rb;
+    protected Animator playerAnimator;
+
+    protected Player player;
+    private string animBoolName;
+
+    protected Dictionary<string, PlayerState> _subStates = new Dictionary<string, PlayerState>();
+    protected PlayerState _currentSubState = null;
+
+
 
     protected string GetAnim(Anim anim)
     {
