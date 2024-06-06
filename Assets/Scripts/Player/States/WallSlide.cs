@@ -11,7 +11,7 @@ public class PlayerWallSlide : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.transform.position = new Vector2(player.transform.position.x + 0.3f * player.FacingDir, player.transform.position.y);
+        player.transform.position = new Vector2(player.transform.position.x + 0.5f * player.FacingDir, player.transform.position.y);
     }
 
     public override void Update()
