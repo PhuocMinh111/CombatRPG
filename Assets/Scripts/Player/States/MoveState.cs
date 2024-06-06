@@ -23,29 +23,24 @@ public class PlayerMoveState : PlayerState
         if (xInput != 0)
         {
 
-            if (player.IsGround)
+
+
+            player.MoveHorizontally(xInput);
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                stateMachine.ChangeState(stateMachine.SlideState);
 
-
-                player.MoveHorizontally(xInput);
-                if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    stateMachine.ChangeState(stateMachine.SlideState);
-
-                }
-                else if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    stateMachine.ChangeState(stateMachine.JumpState);
-                }
-                else if (Input.GetMouseButton(1))
-                {
-                    stateMachine.ChangeSubState(Anim.MovingAttack);
-                }
             }
-            else if (!player.IsGround && player.IsHitWall)
+            else if (Input.GetKeyDown(KeyCode.Space))
             {
-                stateMachine.ChangeState(stateMachine.WallSlideState);
+                stateMachine.ChangeState(stateMachine.AirState);
             }
+            else if (Input.GetMouseButton(1))
+            {
+                ChangeSubState(Anim.MovingAttack);
+            }
+
+
 
         }
         else if (xInput == 0)

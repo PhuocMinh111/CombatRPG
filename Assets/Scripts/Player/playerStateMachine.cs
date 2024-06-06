@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum Anim
 {
-  Jump,
+  Air,
   Idle,
   Move,
   Slide,
@@ -24,7 +24,7 @@ public class PlayerStateMachine
 
   public PlayerState IdleState { get; private set; }
   public PlayerState MoveState { get; private set; }
-  public PlayerState JumpState { get; private set; }
+  public PlayerState AirState { get; private set; }
 
   public PlayerState SlideState { get; private set; }
   public PlayerState AttackState { get; private set; }
@@ -38,7 +38,7 @@ public class PlayerStateMachine
   {
     IdleState = new PlayerIdleState(player, this, GetAnim(Anim.Idle));
     MoveState = new PlayerMoveState(player, this, GetAnim(Anim.Move));
-    JumpState = new PlayerJumpState(player, this, GetAnim(Anim.Jump));
+    AirState = new PlayerAirState(player, this, GetAnim(Anim.Air));
     SlideState = new PlayerSlideState(player, this, GetAnim(Anim.Slide));
     WallSlideState = new PlayerWallSlide(player, this, GetAnim(Anim.WallSlide));
 
@@ -62,14 +62,5 @@ public class PlayerStateMachine
     currentState.Enter();
   }
 
-  public void ChangeSubState(Anim anim)
-  {
-    var subState = currentState.GetSubState(anim);
-    if (subState != null)
-    {
-      currentState.CurrentSubState.Exit();
-      currentState.CurrentSubState = subState;
-      currentState.CurrentSubState.Enter();
-    }
-  }
+
 }

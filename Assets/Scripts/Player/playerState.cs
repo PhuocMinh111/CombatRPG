@@ -48,7 +48,16 @@ public class PlayerState : IPlayerState
     protected Dictionary<string, PlayerState> _subStates = new Dictionary<string, PlayerState>();
     protected PlayerState _currentSubState = null;
 
-
+    protected void ChangeSubState(Anim anim)
+    {
+        var subState = GetSubState(anim);
+        if (subState != null)
+        {
+            CurrentSubState.Exit();
+            CurrentSubState = subState;
+            CurrentSubState.Enter();
+        }
+    }
 
     protected string GetAnim(Anim anim)
     {

@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJumpState : PlayerState
+public class PlayerAirState : PlayerState
 {
     PlayerState DashState;
 
-    public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
+    public PlayerAirState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
         DashState = new PlayerDashState(_player, playerStateMachine, GetAnim(Anim.Dash));
         this.CurrentSubState = DashState;
@@ -37,22 +37,22 @@ public class PlayerJumpState : PlayerState
             if (rb.velocity.y == 0)
                 stateMachine.ChangeState(stateMachine.IdleState);
         }
-        else
+
+
+        if (!DashState.IsActive)
+            player.MoveHorizontally(xInput);
+
+        if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
         {
-            if (!DashState.IsActive)
-                player.MoveHorizontally(xInput);
 
-            if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
-            {
-
-                _canDoubleJump = false;
-                Jump(1.2f);
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                Dash();
-            }
+            _canDoubleJump = false;
+            Jump(1.2f);
         }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Dash();
+        }
+
 
     }
     void Jump(float _yVelocity)
@@ -63,7 +63,7 @@ public class PlayerJumpState : PlayerState
     {
         PlayerState DashState = GetSubState(Anim.Dash);
         if (DashState != null)
-            stateMachine.ChangeSubState(Anim.Dash);
+            ChangeSubState(Anim.Dash);
 
     }
 }

@@ -26,7 +26,7 @@ public class PlayerIdleState : PlayerState
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
             {
 
-                stateMachine.ChangeState(stateMachine.JumpState);
+                stateMachine.ChangeState(stateMachine.AirState);
             }
             if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideTimer.IsTimeOut)
             {
