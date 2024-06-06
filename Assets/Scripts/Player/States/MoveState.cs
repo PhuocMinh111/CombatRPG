@@ -20,10 +20,12 @@ public class PlayerMoveState : PlayerState
         base.Update();
 
 
-        if (xInput != 0 && player.SlideTimer.IsTimeOut)
+        if (xInput != 0)
         {
+
             if (player.IsGround)
             {
+
 
                 player.MoveHorizontally(xInput);
                 if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -39,15 +41,16 @@ public class PlayerMoveState : PlayerState
                 {
                     stateMachine.ChangeSubState(Anim.MovingAttack);
                 }
-
             }
+            else if (!player.IsGround && player.IsHitWall)
+            {
+                stateMachine.ChangeState(stateMachine.WallSlideState);
+            }
+
         }
         else if (xInput == 0)
         {
-
-
             stateMachine.ChangeState(stateMachine.IdleState);
-
         }
 
     }

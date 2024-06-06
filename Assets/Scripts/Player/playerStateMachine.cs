@@ -8,7 +8,8 @@ public enum Anim
   Move,
   Slide,
   Dash,
-  MovingAttack
+  MovingAttack,
+  WallSlide
 
 
 };
@@ -27,6 +28,7 @@ public class PlayerStateMachine
 
   public PlayerState SlideState { get; private set; }
   public PlayerState AttackState { get; private set; }
+  public PlayerState WallSlideState { get; private set; }
 
   public PlayerState CurrentState
   {
@@ -38,6 +40,7 @@ public class PlayerStateMachine
     MoveState = new PlayerMoveState(player, this, GetAnim(Anim.Move));
     JumpState = new PlayerJumpState(player, this, GetAnim(Anim.Jump));
     SlideState = new PlayerSlideState(player, this, GetAnim(Anim.Slide));
+    WallSlideState = new PlayerWallSlide(player, this, GetAnim(Anim.WallSlide));
 
     Initialize(IdleState);
   }

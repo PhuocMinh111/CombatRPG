@@ -59,6 +59,9 @@ public class PlayerState : IPlayerState
 
     #region property
     public string State { get; set; }
+
+    public bool IsActive { get; set; }
+
     public Dictionary<string, PlayerState> SubStates
     {
         get { return _subStates; }
@@ -86,12 +89,14 @@ public class PlayerState : IPlayerState
         this.stateMachine = playerStateMachine;
         this.animBoolName = _animBoolName;
         rb = _player.Rigidbody2D;
+        IsActive = false;
         playerAnimator = _player.PlayerAnimator;
     }
 
     public virtual void Enter()
     {
         Debug.Log("enter " + animBoolName);
+        IsActive = true;
         playerAnimator.SetBool(animBoolName, true);
 
     }
@@ -105,7 +110,7 @@ public class PlayerState : IPlayerState
     }
     public virtual void Exit()
     {
-
+        IsActive = false;
         playerAnimator.SetBool(animBoolName, false);
     }
 

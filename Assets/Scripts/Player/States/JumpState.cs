@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerState
 {
+    PlayerState DashState;
+
     public PlayerJumpState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
-        this.CurrentSubState = new PlayerDashState(_player, playerStateMachine, GetAnim(Anim.Dash));
+        DashState = new PlayerDashState(_player, playerStateMachine, GetAnim(Anim.Dash));
+        this.CurrentSubState = DashState;
     }
+
     private bool _canDoubleJump = true;
 
     public override void Enter()
@@ -35,7 +39,8 @@ public class PlayerJumpState : PlayerState
         }
         else
         {
-            player.MoveHorizontally(xInput);
+            if (!DashState.IsActive)
+                player.MoveHorizontally(xInput);
 
             if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
             {

@@ -8,7 +8,8 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Dash();
+
+        player.MoveHorizontally(2.5f * player.FacingDir);
     }
     public override void Update()
     {

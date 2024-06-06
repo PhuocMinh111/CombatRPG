@@ -8,7 +8,7 @@ public class PlayerSlideState : PlayerState
     private float _currentSlideTime = 0;
     private float _slideIncreaser = 0.5f;
     private int _maxSlides = 3;
-    private float _canMoveThreshold = 0.5f;
+    private float _canMoveThreshold = .8f;
     private int _slideTaken = 0;
     public override void Enter()
     {

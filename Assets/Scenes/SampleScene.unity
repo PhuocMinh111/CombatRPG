@@ -248,11 +248,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 5
   _jumpForce: 10
+  _dashSpeed: 8
   _slideSpeed: 9
   _slideDuration: 1
   _position: {x: 0, y: 0}
   distanceToGround: 1.56
-  distanceToWall: 0
+  distanceToWall: 0.3
+  playerHeight: 2.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -347,7 +349,7 @@ GameObject:
   - component: {fileID: 1066385265}
   m_Layer: 3
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Flatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -583,7 +585,7 @@ GameObject:
   - component: {fileID: 1777402178}
   m_Layer: 0
   m_Name: Square (1)
-  m_TagString: Untagged
+  m_TagString: Flatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -694,8 +696,8 @@ Transform:
   m_GameObject: {fileID: 1777402177}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.68, y: -1.62, z: 0}
-  m_LocalScale: {x: 14.1755, y: 1.1872, z: 1}
+  m_LocalPosition: {x: 11.09, y: -2.03, z: 0}
+  m_LocalScale: {x: 9.050596, y: 5.3053064, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
