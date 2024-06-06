@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
     [SerializeField] private float _dashSpeed = 8f;
     [SerializeField] private float _slideSpeed = 12f;
     [SerializeField] private float _slideDuration = .8f;
-    [SerializeField] private Vector2 _position;
+
     [Header("Collision info")]
     [SerializeField] private float distanceToGround;
     [SerializeField] private float distanceToWall;
-    [SerializeField] private float playerHeight;
+    [SerializeField] private float wallCheckHeight;
     [SerializeField] private LayerMask whatIsGround;
 
     private Rigidbody2D _rb;
@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private bool _facingRight = true;
     private bool _isGround;
     private bool _airBorne;
+
     private bool _isSliding = false;
     private Timer slideTimer;
 
@@ -43,8 +44,17 @@ public class Player : MonoBehaviour
     {
         get { return _dashSpeed; }
     }
+    public float DistanceToWall
+    {
+        get { return distanceToWall; }
+    }
+    public float DistanceToGround
+    {
+        get { return distanceToGround; }
+    }
     public int PlayerLayer { get; private set; }
     public int EnemyLayer { get; private set; }
+
     public Timer SlideTimer
     {
         get { return slideTimer; }
@@ -69,10 +79,7 @@ public class Player : MonoBehaviour
     public float xInput { get; private set; }
 
     public float yInput { get; private set; }
-    public float DistanceToGround
-    {
-        get; private set;
-    }
+
     public float JumpForce
     {
         get { return _jumpForce; }
@@ -95,8 +102,7 @@ public class Player : MonoBehaviour
 
     public Vector2 Position
     {
-        get { return _position; }
-        set { _position = value; }
+        get; set;
     }
 
     #endregion
@@ -130,7 +136,7 @@ public class Player : MonoBehaviour
     {
 
         CheckInput();
-
+        CheckCollide();
 
         FlipController(_rb.velocity.x);
         playerStateMachine.CurrentState.Update();
@@ -139,7 +145,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckCollide();
+
 
     }
 
@@ -193,7 +199,9 @@ public class Player : MonoBehaviour
 
     void CheckInput()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
+        if (IsGround)
+            xInput = Input.GetAxisRaw("Horizontal");
+
         yInput = Input.GetAxisRaw("Vertical");
     }
 
@@ -221,26 +229,22 @@ public class Player : MonoBehaviour
     }
     private void WallCheck()
     {
-        Collider2D hit = Physics2D.OverlapBox(new Vector2(transform.position.x + distanceToWall * FacingDir, transform.position.y), new Vector2(.1f, playerHeight), EnemyLayer);
+        Collider2D hit = Physics2D.OverlapBox(new Vector2(transform.position.x + distanceToWall * FacingDir, transform.position.y), new Vector2(.5f, wallCheckHeight), EnemyLayer);
         if (hit != null)
         {
             // float distance = Math.Abs(hit - transform.position.y);
-            if (hit.gameObject.tag == "Flatform")
-            {
-
-                IsHitWall = true;
-            }
-            else
-            {
-                IsHitWall = false;
-            }
+            IsHitWall = hit.gameObject.tag == "Flatform";
+        }
+        else
+        {
+            IsHitWall = false;
         }
 
     }
     private void GroundCheck()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(-0.3f * FacingDir, 0, 0), Vector2.down, Mathf.Infinity);
         if (hit.collider != null)
         {
             float distance = Math.Abs(hit.point.y - transform.position.y);
@@ -250,8 +254,8 @@ public class Player : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - distanceToGround));
-        Gizmos.DrawWireCube(new Vector2(transform.position.x + distanceToWall * FacingDir, transform.position.y), new Vector2(.1f, playerHeight));
+        Gizmos.DrawLine(transform.position + new Vector3(-0.3f * FacingDir, 0, 0), new Vector3(transform.position.x + -0.3f * FacingDir, transform.position.y - distanceToGround));
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + distanceToWall * FacingDir, transform.position.y), new Vector2(.5f, wallCheckHeight));
 
     }
     #endregion

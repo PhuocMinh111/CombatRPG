@@ -251,10 +251,9 @@ MonoBehaviour:
   _dashSpeed: 8
   _slideSpeed: 9
   _slideDuration: 1
-  _position: {x: 0, y: 0}
   distanceToGround: 1.56
-  distanceToWall: 0.3
-  playerHeight: 2.5
+  distanceToWall: 0
+  wallCheckHeight: 1.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -333,8 +332,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.4121043, y: -0.35835174}
-  m_Size: {x: 1.3242086, y: 2.0409117}
+  m_Offset: {x: -0.49343574, y: -0.3583517}
+  m_Size: {x: 0.9582176, y: 2.0409117}
   m_Direction: 0
 --- !u!1 &1066385264
 GameObject:

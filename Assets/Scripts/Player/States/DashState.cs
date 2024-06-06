@@ -14,19 +14,18 @@ public class PlayerDashState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (player.IsGround)
+
+        if (xInput == 0)
         {
-            if (xInput == 0)
-            {
 
-                stateMachine.ChangeState(stateMachine.IdleState);
-            }
-            else
-            {
-
-                stateMachine.ChangeState(stateMachine.MoveState);
-            }
+            stateMachine.ChangeState(stateMachine.IdleState);
         }
+        else
+        {
+
+            stateMachine.ChangeState(stateMachine.MoveState);
+        }
+
     }
     public override void Exit()
     {

@@ -30,12 +30,21 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
         playerAnimator.SetFloat("yVelocity", yInput);
+        rb.velocity = new Vector2(player.MoveSpeed, rb.velocity.y);
+
 
         if (player.IsGround)
         {
             _canDoubleJump = true;
             if (rb.velocity.y == 0)
                 stateMachine.ChangeState(stateMachine.IdleState);
+        }
+        else
+        {
+            if (player.IsHitWall)
+            {
+                stateMachine.ChangeState(stateMachine.WallSlideState);
+            }
         }
 
 
@@ -57,7 +66,7 @@ public class PlayerAirState : PlayerState
     }
     void Jump(float _yVelocity)
     {
-        rb.velocity = new Vector2(rb.velocity.x, _yVelocity * player.JumpForce);
+        rb.velocity = new Vector2(player.MoveSpeed, _yVelocity * player.JumpForce);
     }
     void Dash()
     {
