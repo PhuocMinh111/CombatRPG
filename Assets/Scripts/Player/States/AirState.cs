@@ -30,7 +30,7 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
         playerAnimator.SetFloat("yVelocity", yInput);
-        rb.velocity = new Vector2(player.MoveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(player.MoveSpeed * player.FacingDir, rb.velocity.y);
 
 
         if (player.IsGround)
@@ -48,8 +48,8 @@ public class PlayerAirState : PlayerState
         }
 
 
-        if (!DashState.IsActive)
-            player.MoveHorizontally(xInput);
+        // if (!DashState.IsActive)
+        // player.MoveHorizontally(xInput);
 
         if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
         {
@@ -66,7 +66,7 @@ public class PlayerAirState : PlayerState
     }
     void Jump(float _yVelocity)
     {
-        rb.velocity = new Vector2(player.MoveSpeed, _yVelocity * player.JumpForce);
+        rb.velocity = new Vector2(player.MoveSpeed * player.FacingDir, _yVelocity * player.JumpForce);
     }
     void Dash()
     {

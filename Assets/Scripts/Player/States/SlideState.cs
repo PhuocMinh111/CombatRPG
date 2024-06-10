@@ -6,47 +6,47 @@ public class PlayerSlideState : PlayerState
     {
     }
     private float _currentSlideTime = 0;
+    private float _slideDuration;
     private float _slideIncreaser = 0.5f;
     private int _maxSlides = 3;
     private float _canMoveThreshold = .8f;
     private int _slideTaken = 0;
+    private float _slideCooldown = 0;
+
+
     public override void Enter()
     {
         base.Enter();
+        _slideCooldown = player.SlideDuration;
         _currentSlideTime = player.SlideDuration;
-        Slide(_currentSlideTime);
+        rb.velocity = new Vector2(player.SlideSpeed * player.FacingDir, rb.velocity.y);
 
     }
     public override void Update()
 
     {
         base.Update();
+        _slideCooldown -= Time.deltaTime;
 
-        _currentSlideTime -= Time.deltaTime;
-        if (player.SlideTimer.IsTimeOut)
+
+        if (_slideCooldown > 0)
         {
 
-            if (xInput != 0)
+            if (xInput != 0 && _slideCooldown < _canMoveThreshold)
             {
                 stateMachine.ChangeState(stateMachine.MoveState);
-
-                // out slide
             }
             // In sliding
-            else
-            {
-                stateMachine.ChangeState(stateMachine.IdleState);
-                if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideDuration - _currentSlideTime < _canMoveThreshold)
-                {
-                    Slide(_slideIncreaser);
-                }
-            }
+
         }
         else
         {
-            if (xInput != 0 && _currentSlideTime < _canMoveThreshold)
-            {
+            if (xInput != 0)
                 stateMachine.ChangeState(stateMachine.MoveState);
+            else
+            {
+                stateMachine.ChangeState(stateMachine.IdleState);
+
             }
 
         }

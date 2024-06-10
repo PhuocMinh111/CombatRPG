@@ -10,6 +10,7 @@ public class PlayerIdleState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        rb.velocity = Vector2.zero;
     }
 
     public override void Exit()
@@ -22,7 +23,7 @@ public class PlayerIdleState : PlayerState
 
         if (xInput == 0)
         {
-
+            Debug.Log(xInput);
             if (Input.GetKeyDown(KeyCode.Space) && player.IsGround)
             {
 

@@ -192,10 +192,6 @@ public class Player : MonoBehaviour
 
     #region  Input Action
 
-    protected void SetVelocity()
-    {
-        _rb.velocity = new Vector2(xInput * MoveSpeed, yInput * JumpForce);
-    }
 
     void CheckInput()
     {

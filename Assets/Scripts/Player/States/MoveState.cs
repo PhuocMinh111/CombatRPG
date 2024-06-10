@@ -23,9 +23,8 @@ public class PlayerMoveState : PlayerState
         if (xInput != 0)
         {
 
-
-
             player.MoveHorizontally(xInput);
+
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 stateMachine.ChangeState(stateMachine.SlideState);

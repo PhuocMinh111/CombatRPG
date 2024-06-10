@@ -112,7 +112,7 @@ public class PlayerState : IPlayerState
     public virtual void Update()
     {
 
-
+        Debug.Log("Update " + this.animBoolName);
         xInput = player.xInput;
         yInput = player.yInput;
 
