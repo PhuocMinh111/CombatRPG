@@ -19,6 +19,7 @@ public class PlayerSlideState : PlayerState
         base.Enter();
         _slideCooldown = player.SlideDuration;
         _currentSlideTime = player.SlideDuration;
+        player.IsSliding = true;
         rb.velocity = new Vector2(player.SlideSpeed * player.FacingDir, rb.velocity.y);
 
     }
@@ -56,6 +57,7 @@ public class PlayerSlideState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.IsSliding = false;
     }
 
     private void Slide(float time)

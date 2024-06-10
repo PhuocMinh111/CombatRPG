@@ -9,7 +9,11 @@ public enum Anim
   Slide,
   Dash,
   MovingAttack,
-  WallSlide
+  WallSlide,
+  Attack,
+  Attack1,
+  Attack2,
+  Attack3,
 
 
 };
@@ -20,15 +24,16 @@ public class PlayerStateMachine
     return animBoolNames.ToString();
   }
   private PlayerState currentState;
-  private Player player;
+  private Player Player;
 
   public PlayerState IdleState { get; private set; }
   public PlayerState MoveState { get; private set; }
   public PlayerState AirState { get; private set; }
 
   public PlayerState SlideState { get; private set; }
-  public PlayerState AttackState { get; private set; }
+  public PlayerState Attack { get; private set; }
   public PlayerState WallSlideState { get; private set; }
+
 
   public PlayerState CurrentState
   {
@@ -36,12 +41,13 @@ public class PlayerStateMachine
   }
   public PlayerStateMachine(Player player)
   {
+    Player = player;
     IdleState = new PlayerIdleState(player, this, GetAnim(Anim.Idle));
     MoveState = new PlayerMoveState(player, this, GetAnim(Anim.Move));
     AirState = new PlayerAirState(player, this, GetAnim(Anim.Air));
     SlideState = new PlayerSlideState(player, this, GetAnim(Anim.Slide));
     WallSlideState = new PlayerWallSlide(player, this, GetAnim(Anim.WallSlide));
-
+    Attack = new Attack(player, this, GetAnim(Anim.Attack));
     Initialize(IdleState);
   }
   public void Initialize(PlayerState _startState)
@@ -59,6 +65,7 @@ public class PlayerStateMachine
       currentState.CurrentSubState.Exit();
     }
     currentState = _newState;
+    Player.CurrentState = currentState;
     currentState.Enter();
   }
 

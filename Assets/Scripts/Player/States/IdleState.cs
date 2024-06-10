@@ -29,10 +29,12 @@ public class PlayerIdleState : PlayerState
 
                 stateMachine.ChangeState(stateMachine.AirState);
             }
-            if (Input.GetKeyDown(KeyCode.LeftShift) && player.SlideTimer.IsTimeOut)
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !player.IsSliding)
             {
                 stateMachine.ChangeState(stateMachine.SlideState);
             }
+            if (Input.GetMouseButtonDown(0))
+                stateMachine.ChangeState(stateMachine.Attack);
         }
         else if (xInput != 0)
         {

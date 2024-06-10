@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region property
+    public PlayerState CurrentState { get; set; }
     public float MoveSpeed
     {
         get { return _moveSpeed; }
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
     public bool IsSliding
     {
         get { return _isSliding; }
+        set { _isSliding = value; }
     }
     public bool IsHitWall { get; private set; }
 

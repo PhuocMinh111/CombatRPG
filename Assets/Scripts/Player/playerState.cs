@@ -44,7 +44,7 @@ public class PlayerState : IPlayerState
 
     protected Player player;
     private string animBoolName;
-
+    protected bool animationTrigger;
     protected Dictionary<string, PlayerState> _subStates = new Dictionary<string, PlayerState>();
     protected PlayerState _currentSubState = null;
 
@@ -58,7 +58,10 @@ public class PlayerState : IPlayerState
             CurrentSubState.Enter();
         }
     }
-
+    protected void AddSubState(PlayerState substate)
+    {
+        SubStates.Add(substate.animBoolName, substate);
+    }
     protected string GetAnim(Anim anim)
     {
         return PlayerStateMachine.GetAnim(anim);
@@ -74,6 +77,7 @@ public class PlayerState : IPlayerState
     public Dictionary<string, PlayerState> SubStates
     {
         get { return _subStates; }
+        set { _subStates = value; }
 
     }
     public PlayerState CurrentSubState
@@ -106,6 +110,7 @@ public class PlayerState : IPlayerState
     {
         Debug.Log("enter " + animBoolName);
         IsActive = true;
+        animationTrigger = false;
         playerAnimator.SetBool(animBoolName, true);
 
     }
@@ -124,8 +129,15 @@ public class PlayerState : IPlayerState
     }
 
 
+    public virtual void OnAnimationTrigger() => animationTrigger = true;
 
-
+    protected void SetAnimBool(string _animBoolName, bool _bool)
+    {
+        if (playerAnimator.GetBool(_animBoolName))
+        {
+            playerAnimator.SetBool(_animBoolName, _bool);
+        }
+    }
 
 
 

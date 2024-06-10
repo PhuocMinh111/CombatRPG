@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : PlayerState
+public class Attack1 : PlayerState
 {
-    public AttackState(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
+    public Attack1(Player _player, PlayerStateMachine playerStateMachine, string _animBoolName) : base(_player, playerStateMachine, _animBoolName)
     {
     }
     public override void Enter()
@@ -19,7 +19,6 @@ public class AttackState : PlayerState
     public override void Update()
     {
         base.Update();
-
 
 
     }
