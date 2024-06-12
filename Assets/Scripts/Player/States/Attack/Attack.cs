@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AttackState : PlayerState
 {
-    private int comboClick = 1;
+    private int comboClick = 0;
     private int attacksNumber;
     private bool clickedInframe;
     private float lastTimeAttack;
-    private float comboWindow = 2f;
+    private float comboWindow = 1f;
     public AttackState(Player _player, PlayerStateMachine _playerStateMachine, string _animBoolName) : base(_player, _playerStateMachine, _animBoolName)
     {
         PlayerState Attack1 = new(_player, _playerStateMachine, GetAnim(Anim.Attack1));
@@ -50,10 +50,11 @@ public class AttackState : PlayerState
 
         if (animationTrigger)
         {
-            if (comboClick > 1)
+            if (comboClick > 0)
             {
-                if (comboClick >= 2)
-                    comboClick = 1;
+                if (Time.time > lastTimeAttack + comboWindow)
+                    comboClick = 0;
+
                 playerAnimator.SetInteger("ComboCounter", comboClick);
             }
             else
