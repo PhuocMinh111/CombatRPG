@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         slideTimer = gameObject.AddComponent<Timer>();
     }
 
-
+    public void OnAnimationTrigger() => playerStateMachine.CurrentState.OnAnimationTrigger();
     private void Update()
     {
 
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        playerStateMachine.CurrentState.FixedUpdate();
 
     }
 

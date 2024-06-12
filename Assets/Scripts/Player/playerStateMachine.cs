@@ -47,7 +47,7 @@ public class PlayerStateMachine
     AirState = new PlayerAirState(player, this, GetAnim(Anim.Air));
     SlideState = new PlayerSlideState(player, this, GetAnim(Anim.Slide));
     WallSlideState = new PlayerWallSlide(player, this, GetAnim(Anim.WallSlide));
-    Attack = new Attack(player, this, GetAnim(Anim.Attack));
+    Attack = new AttackState(player, this, GetAnim(Anim.Attack));
     Initialize(IdleState);
   }
   public void Initialize(PlayerState _startState)

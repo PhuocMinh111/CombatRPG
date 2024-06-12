@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -58,6 +60,10 @@ public class PlayerState : IPlayerState
             CurrentSubState.Enter();
         }
     }
+    protected void ChangeState(PlayerState state)
+    {
+        stateMachine.ChangeState(state);
+    }
     protected void AddSubState(PlayerState substate)
     {
         SubStates.Add(substate.animBoolName, substate);
@@ -103,6 +109,7 @@ public class PlayerState : IPlayerState
         this.animBoolName = _animBoolName;
         rb = _player.Rigidbody2D;
         IsActive = false;
+
         playerAnimator = _player.PlayerAnimator;
     }
 
@@ -111,7 +118,7 @@ public class PlayerState : IPlayerState
         Debug.Log("enter " + animBoolName);
         IsActive = true;
         animationTrigger = false;
-        playerAnimator.SetBool(animBoolName, true);
+        SetAnimBool(animBoolName, true);
 
     }
     public virtual void Update()
@@ -122,10 +129,14 @@ public class PlayerState : IPlayerState
         yInput = player.yInput;
 
     }
+    public virtual void FixedUpdate()
+    {
+        Debug.Log("Fix Update " + this.animBoolName);
+    }
     public virtual void Exit()
     {
         IsActive = false;
-        playerAnimator.SetBool(animBoolName, false);
+        SetAnimBool(animBoolName, false);
     }
 
 
@@ -133,7 +144,8 @@ public class PlayerState : IPlayerState
 
     protected void SetAnimBool(string _animBoolName, bool _bool)
     {
-        if (playerAnimator.GetBool(_animBoolName))
+        bool existBool = playerAnimator.parameters.Any(x => x.name == _animBoolName);
+        if (existBool)
         {
             playerAnimator.SetBool(_animBoolName, _bool);
         }

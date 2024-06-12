@@ -26,24 +26,27 @@ public class PlayerMoveState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            stateMachine.ChangeState(stateMachine.SlideState);
+            ChangeState(stateMachine.SlideState);
 
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            stateMachine.ChangeState(stateMachine.AirState);
+            ChangeState(stateMachine.AirState);
         }
         else if (Input.GetMouseButton(1))
         {
             ChangeSubState(Anim.Attack);
         }
-
+        else if (Input.GetMouseButtonDown(0))
+        {
+            ChangeState(stateMachine.Attack);
+        }
 
 
 
         if (xInput == 0)
         {
-            stateMachine.ChangeState(stateMachine.IdleState);
+            ChangeState(stateMachine.IdleState);
         }
 
     }

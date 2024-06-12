@@ -10,6 +10,6 @@ public class AnimationTriggers : MonoBehaviour
     public void OnAnimationTrigger()
     {
         Debug.Log("On Animation Trigger");
-        Player.CurrentState.OnAnimationTrigger();
+        Player.OnAnimationTrigger();
     }
 }
