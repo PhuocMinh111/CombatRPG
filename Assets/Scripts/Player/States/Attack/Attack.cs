@@ -14,14 +14,16 @@ public class AttackState : PlayerState
     {
 
 
-        comboNumber = 1;
+        comboNumber = 2;
 
     }
     public override void Enter()
     {
         base.Enter();
-        if (comboCounter > comboCounter || Time.time >= lastTimeAttack + comboWindow)
+        if (comboCounter > comboNumber || Time.time >= lastTimeAttack + comboWindow)
             comboCounter = 0;
+
+
 
         playerAnimator.SetInteger("Combo", comboCounter);
 
@@ -41,8 +43,6 @@ public class AttackState : PlayerState
         lastTimeAttack = Time.time;
         comboCounter++;
 
-        Debug.Log("last time attack" + lastTimeAttack);
-        Debug.Log("combo counter " + comboCounter);
 
         // Debug.Break();
 
