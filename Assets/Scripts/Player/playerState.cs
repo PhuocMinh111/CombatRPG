@@ -86,6 +86,7 @@ public class PlayerState : IPlayerState
         set { _subStates = value; }
 
     }
+    protected float StateTimer { get; set; }
     public PlayerState CurrentSubState
     {
         get { return _currentSubState; }
@@ -123,7 +124,7 @@ public class PlayerState : IPlayerState
     }
     public virtual void Update()
     {
-
+        StateTimer--;
         Debug.Log("Update " + this.animBoolName);
         xInput = player.xInput;
         yInput = player.yInput;

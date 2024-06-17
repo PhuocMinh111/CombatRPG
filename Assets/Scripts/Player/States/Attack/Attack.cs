@@ -20,9 +20,9 @@ public class AttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         if (comboCounter > comboNumber || Time.time >= lastTimeAttack + comboWindow)
             comboCounter = 0;
-
 
 
         playerAnimator.SetInteger("Combo", comboCounter);
@@ -53,7 +53,11 @@ public class AttackState : PlayerState
         base.Update();
 
         if (animationTrigger)
-            stateMachine.ChangeState(stateMachine.IdleState);
+        {
+            if (xInput == 0)
+                stateMachine.ChangeState(stateMachine.IdleState);
+            stateMachine.ChangeState(stateMachine.MoveState);
+        }
 
     }
 
