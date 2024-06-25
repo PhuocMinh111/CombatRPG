@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -140,7 +140,7 @@ public class Player : MonoBehaviour
         CheckInput();
         CheckCollide();
 
-        FlipController(_rb.velocity.x);
+        FlipController(xInput);
         playerStateMachine.CurrentState.Update();
 
     }
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
     {
         GroundCheck();
         WallCheck();
-        Debug.Log("is hit wall " + IsHitWall);
+        Debug.Log("is ground " + IsGround);
     }
 
 
@@ -245,9 +245,23 @@ public class Player : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(-0.3f * FacingDir, 0, 0), Vector2.down, Mathf.Infinity);
         if (hit.collider != null)
         {
+            var layer = hit.collider.gameObject.layer;
+
+
             float distance = Math.Abs(hit.point.y - transform.position.y);
-            // Debug.Log("distance to ground " + distance);
-            IsGround = distance <= distanceToGround;
+
+            IsGround = distance - 0.25f <= distanceToGround;
+
+        }
+    }
+
+    IEnumerator SetVelocityY()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (IsGround)
+        {
+
+            _rb.velocity = new Vector2(_rb.velocity.x, 0);
         }
     }
     private void OnDrawGizmos()

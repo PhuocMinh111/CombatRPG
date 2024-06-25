@@ -19,7 +19,7 @@ public class PlayerAirState : PlayerState
     {
         base.Enter();
 
-        Jump(1);
+        Jump(1.1f);
     }
 
     public override void Exit()
@@ -36,8 +36,10 @@ public class PlayerAirState : PlayerState
         if (player.IsGround)
         {
             _canDoubleJump = true;
-            if (rb.velocity.y == 0)
+
+            if (rb.velocity.y < 0)
                 stateMachine.ChangeState(stateMachine.IdleState);
+
         }
         else
         {
@@ -45,22 +47,24 @@ public class PlayerAirState : PlayerState
             {
                 stateMachine.ChangeState(stateMachine.WallSlideState);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
+            {
+
+                _canDoubleJump = false;
+                Jump(1.2f);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                Dash();
+            }
         }
 
 
         // if (!DashState.IsActive)
         // player.MoveHorizontally(xInput);
 
-        if (Input.GetKeyDown(KeyCode.Space) && _canDoubleJump)
-        {
 
-            _canDoubleJump = false;
-            Jump(1.2f);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Dash();
-        }
 
 
     }
