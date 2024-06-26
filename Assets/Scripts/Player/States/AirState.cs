@@ -37,7 +37,7 @@ public class PlayerAirState : PlayerState
         {
             _canDoubleJump = true;
 
-            if (rb.velocity.y < 0)
+            if (rb.velocity.y <= 0)
                 stateMachine.ChangeState(stateMachine.IdleState);
 
         }
